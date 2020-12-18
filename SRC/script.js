@@ -22,6 +22,13 @@ const dealersDeck = {
       [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
     }
   },
+  shuffleMultipleTimes() {
+    this.shuffleDeck();
+    this.shuffleDeck();
+    this.shuffleDeck();
+    this.shuffleDeck();
+    this.shuffleDeck();
+  },
   drawSingleCard() {
     const {currentDeck, currentHand} = this;
     const draw = currentDeck.pop();
@@ -36,15 +43,63 @@ const dealersDeck = {
   }
 };
 
+//build a custom deck that has been shuffled
+
 const buildBlackJackDeck = (deck) => {
-  console.log(`deck`, deck);
   const buildDeck = deck.initilizeDeck();
-  return deck.shuffleDeck(buildDeck);
+  const shuffle = deck.shuffleMultipleTimes(buildDeck);
+  return deck;
 };
 
+//draw two random cards
 const drawCards = (currentDeck) => {
-  console.log('current', currentDeck);
+  let currentHand = currentDeck;
+  currentHand.drawCards(2);
+  return currentHand
 }
 
+//assign point value to drawn cards
+const pointValue = (currentDeck) => {
 
-// const shuffleCard = deck => deck.shuffleDeck(buildBlackJackDeck);
+  let totalPoints;
+  let currentHand = dealersDeck.currentHand
+  // const values = currentDeck.values.split(',');
+
+  const pointValue = currentHand.map( (cardValue) => {
+    if (cardValue.value === '2') {
+      cardValue.value = 2;
+    } else if (cardValue.value === '3') {
+      cardValue.value = 3;
+    } if (cardValue.value === '4') {
+      cardValue.value = 4;
+    } else if (cardValue.value === '5') {
+      cardValue.value = 5;
+    } else if (cardValue.value === '6') {
+      cardValue.value = 6;
+    } else if (cardValue.value === '7') {
+      cardValue.value = 7;
+    } else if (cardValue.value === '8') {
+      cardValue.value = 8;
+    } else if (cardValue.value === '9') {
+      cardValue.value = 9;
+    } else if (cardValue.value === '10') {
+      cardValue.value = 10;
+    } else if (cardValue.value === 'J') {
+      cardValue.value = 10;
+    } else if (cardValue.value === 'Q') {
+      cardValue.value = 10;
+    } else if (cardValue.value === 'K') {
+      cardValue.value = 10;
+    } else if (cardValue.value === 'A') {
+      cardValue.value = 11;
+    } else {
+      alert('No Card Value Given');
+    }
+    return cardValue.value;
+  })
+
+  const sumOfCards = pointValue.reduce( (prev, currentPoint) => {
+    return prev + currentPoint;
+  }, 0)
+  return sumOfCards;
+}
